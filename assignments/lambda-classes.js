@@ -43,8 +43,11 @@ class Instructor extends Person {
     demo(subject) {
         return `Today we are learning about ${subject}`;
     }
-    grade(student) {
+    grade(student, subject) {
         return `${student.name} receives a perfect score on ${subject}`
+    }
+    evaluate() {
+        return student.grade + (Math.random()*10);
     }
 };
 
@@ -63,11 +66,12 @@ class Instructor extends Person {
 
 
 class Student extends Person {
-    constructor({name, location, gender, previousBackground, className, favSubjects}) {
+    constructor({name, location, gender, previousBackground, className, favSubjects, grade = 78}) {
         super({name, location, gender});
         this.previousBackground = previousBackground;
         this.className = className;
         this.favSubjects = favSubjects;
+        this.grade = grade;
     }
     listsSubjects() {
         // `listsSubjects` a method that logs out all of the student's favoriteSubjects one by one.
@@ -80,6 +84,11 @@ class Student extends Person {
     }
     sprintChallenge(subject) {
         return `${student.name} has begun sprint challenge on ${subject}`
+    }
+    graduate(){
+        if(this.grade >= 70) {
+            return `${this.name} is ready to graduate!`
+        } else return `${this.name} is not ready yet to graduate!`
     }
 };
 
@@ -110,16 +119,35 @@ class ProjectManager extends Instructor {
 };
 
 
-const fred = new Instructor({
-    name: 'Fred',
+// #### Stretch Problem
+
+// * Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
+// * Now that our students have a grade build out a method on the Instructor (this will be used by _BOTH_ instructors and PM's) that will randomly add or subtract points to a student's grade. _Math.random_ will help.
+// * Add a graduate method to a student.
+//   * This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
+//   * If the student's grade is above a 70% let them graduate! Otherswise go back to grading their assignments to increase their score.
+
+
+const gabe = new Instructor({
+    name: 'Gabe',
     location: 'Bedrock',
-    age: 37,
     gender: 'male',
     favLanguage: 'JavaScript',
     specialty: 'Front-end',
     catchPhrase: `Don't forget the homies`,
   });
 
-  console.log(fred);
+  const max = new Student({
+    name: 'Maxime',
+    location: 'Paris',
+    gender: 'male',
+    favLanguage: 'JavaScript',
+    specialty: 'Front-end',
+    catchPhrase: `Alright, alright, alright`,
+  });
+
+  console.log(gabe.demo("Javascript IV"));
+  console.log(gabe.grade(max, "Javascript IV"));
+
 
 
